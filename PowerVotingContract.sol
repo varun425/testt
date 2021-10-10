@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: varunarya
 
 /** 
- * @intro This contract is written by varunarya
- * @contact varunp.b832@gmail.com
+ * @intro This contract is written by varunarya , 11 oct 2021
+ * @contact varunp.b832@gmail.com 
 */
 pragma solidity ^ 0.6.12;
 

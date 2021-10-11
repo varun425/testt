@@ -4,6 +4,7 @@
  * @intro This contract is written by varunarya , 11 oct 2021
  * @contact varunp.b832@gmail.com 
 */
+
 pragma solidity ^ 0.6.12;
 
 /** 
@@ -40,14 +41,14 @@ contract Voting{
     - owner cannot take participate
     */
 
-    function registerUser(address _contestant) public{
+    function registerUser() public{
 
         require(
             msg.sender != owner,
-            "owner cannot take participate"
+            "owner cannot participate"
         );
 
-        if (getCandidateDetail[_contestant].isRegistered == true) {
+        if (getCandidateDetail[msg.sender].isRegistered == true) {
 
             {
                 revert();
@@ -55,9 +56,9 @@ contract Voting{
         }
         else {
             
-            Data memory tempdata = Data(_contestant, true, false, deadAddress);
-            getCandidateDetail[_contestant] = tempdata;
-            totalRegisteredCandidate.push(_contestant);
+            Data memory tempdata = Data(msg.sender, true, false, deadAddress);
+            getCandidateDetail[msg.sender] = tempdata;
+            totalRegisteredCandidate.push(msg.sender);
         }
     }
 
@@ -72,16 +73,19 @@ contract Voting{
 
     function castVote(address _contestant) public{
 
-        if (msg.sender == owner || _contestant == msg.sender || getCandidateDetail[msg.sender].hadVote == true || getCandidateDetail[msg.sender].isRegistered == false) {
+        if (msg.sender == owner || _contestant == msg.sender || 
+        getCandidateDetail[msg.sender].hadVote == true || 
+        getCandidateDetail[msg.sender].isRegistered == false)
+        {
 
             {
                 revert();
             }
         }
         else {
-
+            require(getCandidateDetail[_contestant].isRegistered == true , "cannot vote to unregistred");
             voteCount[_contestant] = voteCount[_contestant] + 1;
-           Data memory tempdata = Data(msg.sender, true, true, _contestant);
+            Data memory tempdata = Data(msg.sender, true, true, _contestant);
             getCandidateDetail[msg.sender] = tempdata;
 
         }
@@ -112,11 +116,11 @@ contract Voting{
     }
 
     /***
-    @winner function to decalre result 
+    @Winner function to decalre result 
     */
 
     function Winner()  public  view returns(address){
-        
+      
         uint256 largest = 0; 
         uint256 i;
         address winneradd;

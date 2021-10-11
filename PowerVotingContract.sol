@@ -116,10 +116,6 @@ contract Voting{
     */
 
     function Winner()  public  view returns(address){
-        require(
-            msg.sender == owner,
-            "Only owner can decalre or open results"
-        );
         
         uint256 largest = 0; 
         uint256 i;

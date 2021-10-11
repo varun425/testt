@@ -112,7 +112,7 @@ contract Voting{
     }
 
     /***
-    @OnlyOwner can use this function to decalre result 
+    @winner function to decalre result 
     */
 
     function Winner()  public  view returns(address){
